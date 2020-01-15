@@ -1,9 +1,9 @@
 FROM prestashop/base:7.2-apache
 
-ENV PS_VERSION ${PS_VERSION}
+ENV PS_VERSION $PS_VER
 
 # Get PrestaShop
-ADD https://www.prestashop.com/download/old/prestashop_${PS_VERSION}.zip /tmp/prestashop.zip
+ADD https://www.prestashop.com/download/old/prestashop_$PS_VER.zip /tmp/prestashop.zip
 
 # Extract
 RUN mkdir -p /tmp/data-ps \
