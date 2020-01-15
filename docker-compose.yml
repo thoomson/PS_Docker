@@ -1,8 +1,8 @@
 version: '3'
 services:
   prestashop:
-    container_name: my-presta
-    image: my-prestashop:latest
+    container_name: some-prestashop
+    image: my-presta:latest
     restart: always
     ports:
       - 8081:80
