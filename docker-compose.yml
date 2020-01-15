@@ -1,7 +1,7 @@
 version: '3'
 services:
   prestashop:
-    container_name: my-presta:latest
+    container_name: my-presta
     image: my-prestashop:latest
     restart: always
     ports:
