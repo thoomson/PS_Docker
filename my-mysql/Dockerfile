@@ -1,0 +1,14 @@
+FROM mysql:5.7
+
+RUN { \
+      echo '[mysqld]'; \
+      echo 'character-set-server=utf8'; \
+      echo 'collation-server=utf8_general_ci'; \
+      echo '[client]'; \
+      echo 'default-character-set=utf8'; \
+    } > /etc/mysql/conf.d/charset.cnf
+
+
+EXPOSE 3308
+
+CMD ["mysqld"]
