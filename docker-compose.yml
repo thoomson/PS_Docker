@@ -16,10 +16,10 @@ services:
       - app_data:/var/www/html
   db:
     container_name: some-mysql
-    image: mysql:5.7
+    image: my-mysql:latest
     restart: always
     ports:
-      - 3307:3306
+      - 3307:3308
     environment:
       - MYSQL_ROOT_PASSWORD=admin
     networks:
