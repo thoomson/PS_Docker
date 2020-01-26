@@ -7,7 +7,7 @@ services:
     ports:
       - 8081:80
     environment:
-      - DB_SERVER=some-mysql
+      - DB_SERVER=some-my
       - DB_USER=root
       - DB_PASSWD=admin
     networks:
