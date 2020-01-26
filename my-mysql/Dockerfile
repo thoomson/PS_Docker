@@ -9,6 +9,6 @@ RUN { \
     } > /etc/mysql/conf.d/charset.cnf
 
 
-EXPOSE 3308
+EXPOSE 3306
 
 CMD ["mysqld"]
