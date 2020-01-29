@@ -1,34 +1,32 @@
 version: '3'
 services:
   prestashop:
-    container_name: some-presta
+    container_name: some-prestashop
     image: my-presta:latest
     restart: always
     ports:
       - 8081:80
     environment:
-      - DB_SERVER=some-my
+      - DB_SERVER=some-mysql
       - DB_USER=root
       - DB_PASSWD=admin
     networks:
-      - prestashop-net
+      - prestashop-net-env-$D_ENV
     volumes:
-      - app_data:/var/www/html
+      - app_data_env-$D_ENV:/var/www/html
   db:
-    container_name: some-my
+    container_name: some-mysql
     image: my-mysql:latest
     restart: always
-    ports:
-      - 3310:3306
     environment:
       - MYSQL_ROOT_PASSWORD=admin
     networks:
-      - prestashop-net
+      - prestashop-net-env-$D_ENV
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_data_env-$D_ENV:/var/lib/mysql
 networks:
-  prestashop-net:
+  prestashop-net-env-$D_ENV:
     driver: 'bridge'
 volumes:
-  app_data:
-  mysql_data:
+  app_data_env-$D_ENV:
+  mysql_data_env-$D_ENV:
