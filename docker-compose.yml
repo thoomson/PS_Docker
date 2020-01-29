@@ -5,7 +5,7 @@ services:
     image: my-presta:latest
     restart: always
     ports:
-      - 8081:80
+      - 808$D_ENV:80
     environment:
       - DB_SERVER=some-mysql
       - DB_USER=root
