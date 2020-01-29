@@ -21,7 +21,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=admin
     networks:
-      - prestashop-net-env-$D_ENV
+      - prestashop-net-env-1
     volumes:
       - mysql_data_1:/var/lib/mysql
 networks:
