@@ -4,7 +4,8 @@ import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-testurl = "http://127.0.0.1:808" + os.environ["DEPLOY_ENV"]
+env = os.environ["DEPLOY_ENV"]
+testurl = "http://127.0.0.1:808" + env
 
 class PrestashopSearch(unittest.TestCase):
 
