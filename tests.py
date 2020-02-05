@@ -1,8 +1,10 @@
+import HtmlTestRunner
 import unittest
+import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-class PythonOrgSearch(unittest.TestCase):
+class PrestashopSearch(unittest.TestCase):
 
     def setUp(self):
         chrome_options = webdriver.ChromeOptions()
@@ -12,9 +14,10 @@ class PythonOrgSearch(unittest.TestCase):
         self.driver = webdriver.Chrome(options=chrome_options)
 
 
-    def test_search_in_python_org(self):
+    def test_search_in_prestashop(self):
+        ENV_NUMBER = os.environ["DEPLOY_ENV"]
         driver = self.driver
-        driver.get("http://127.0.0.1:8081")
+        driver.get("http://127.0.0.1:808", ENV_NUMBER)
         self.assertIn("Ma boutique", driver.title)
         elem = driver.find_element_by_name("s")
         elem.send_keys("pull")
@@ -26,4 +29,4 @@ class PythonOrgSearch(unittest.TestCase):
         self.driver.close()
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner())
