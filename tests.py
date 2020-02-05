@@ -4,6 +4,9 @@ import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
+ENV_NUMBER = os.environ["DEPLOY_ENV"]
+testurl = "http://127.0.0.1:808" + ENV_NUMBER
+
 class PrestashopSearch(unittest.TestCase):
 
     def setUp(self):
@@ -15,9 +18,8 @@ class PrestashopSearch(unittest.TestCase):
 
 
     def test_search_in_prestashop(self):
-        ENV_NUMBER = os.environ["DEPLOY_ENV"]
         driver = self.driver
-        driver.get("http://127.0.0.1:808", ENV_NUMBER)
+        driver.get(testurl)
         self.assertIn("Ma boutique", driver.title)
         elem = driver.find_element_by_name("s")
         elem.send_keys("pull")
