@@ -25,7 +25,15 @@ class PrestashopSearch(unittest.TestCase):
         elem.send_keys(Keys.RETURN)
         assert "Veuillez nous excuser pour le désagrément." not in driver.page_source
 
-
+    def test_search_unknow_prestashop(self):
+        driver = self.driver
+        driver.get(testurl)
+        self.assertIn("Ma boutique", driver.title)
+        elem = driver.find_element_by_name("s")
+        elem.send_keys("lyufytdhrtsdtr")
+        elem.send_keys(Keys.RETURN)
+        assert "Veuillez nous excuser pour le désagrément." in driver.page_source
+        
     def tearDown(self):
         self.driver.close()
 
