@@ -30,4 +30,4 @@ class PrestashopSearch(unittest.TestCase):
         self.driver.close()
 
 if __name__ == "__main__":
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner())
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="MyReport", add_timestamp=False))
