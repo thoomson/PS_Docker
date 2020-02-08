@@ -1,8 +1,8 @@
 pipeline {
    agent any
    environment {
-        PS_VERSION = '1.7.6.0'
-        DEPLOY_ENV = '1'
+        PS_VERSION = '1.7.6.2'
+        DEPLOY_ENV = '2'
    }
 
    stages {
@@ -34,7 +34,8 @@ pipeline {
             sh "docker build -t my-mysql ."
             sh "wget -N https://raw.githubusercontent.com/thoomson/PS_Docker/master/my-presta/Dockerfile"
             sh "docker build --build-arg VERSION=${PS_VERSION} -t my-presta ."
-            sh "wget -N https://raw.githubusercontent.com/thoomson/PS_Docker/master/ENV/$DEPLOY_ENV/docker-compose.yml"
+            sh "wget -O compose.file -N https://raw.githubusercontent.com/thoomson/PS_Docker/master/docker-compose.yml"
+            sh "sed 's/ENVIR/$DEPLOY_ENV/g' compose.file > docker-compose.yml"
          }
       }
       stage('Run') {
@@ -46,8 +47,12 @@ pipeline {
          steps {
             sh "wget -N https://raw.githubusercontent.com/thoomson/PS_Docker/master/tests.py"
             sh "export DEPLOY_ENV=$DEPLOY_ENV && python3 tests.py"
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'reports', reportFiles: 'MyReport.html', reportName: 'Tests Dashboard', reportTitles: ''])    
-        }
+         }
+      }
+      stage('PublishReport') {
+         steps {
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'MyReport.html', reportName: 'Tests Dashboard', reportTitles: ''])    
+         }
       }
    }
 }
