@@ -24,7 +24,7 @@ pipeline {
             sh "wget -N https://github.com/PrestaShop/PrestaShop/archive/${PS_VERSION}.zip"
             sh "unzip ${PS_VERSION}.zip"
             sh "cd PrestaShop-${PS_VERSION} && composer install"
-            sh "cd PrestaShop-${PS_VERSION} && export SYMFONY_DEPRECATIONS_HELPER=weak && php -d date.timezone=UTC ./vendor/bin/phpunit --testdox-html ../reports/report.html -c tests/Unit/phpunit.xml"
+            sh "cd PrestaShop-${PS_VERSION} && export SYMFONY_DEPRECATIONS_HELPER=weak && php -d date.timezone=UTC ./vendor/bin/phpunit -c tests/Unit/phpunit.xml"
             sh "rm -rf PrestaShop-${PS_VERSION} ${PS_VERSION}.zip"
          }
       }
@@ -46,8 +46,7 @@ pipeline {
          steps {
             sh "wget -N https://raw.githubusercontent.com/thoomson/PS_Docker/master/tests.py"
             sh "export DEPLOY_ENV=$DEPLOY_ENV && python3 tests.py"
-        
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, escapeUnderscores: false, keepAll: false, reportDir: 'reports', reportFiles: 'report.html', reportName: 'HTML Report', reportTitles: ''])    
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'reports', reportFiles: 'MyReport.html', reportName: 'Tests Dashboard', reportTitles: ''])    
         }
       }
    }
