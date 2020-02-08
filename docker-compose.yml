@@ -5,15 +5,15 @@ services:
     image: my-presta:latest
     restart: always
     ports:
-      - 808${D_ENV}:80
+      - 808ENVIR:80
     environment:
       - DB_SERVER=some-mysql
       - DB_USER=root
       - DB_PASSWD=admin
     networks:
-      - prestashop-net-env-${D_ENV}
+      - prestashop-net-env-ENVIR
     volumes:
-      - app_data-${D_ENV}:/var/www/html
+      - app_data-ENVIR:/var/www/html
   db:
     container_name: some-mysql
     image: my-mysql:latest
@@ -21,12 +21,12 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=admin
     networks:
-      - prestashop-net-env-${D_ENV}
+      - prestashop-net-env-ENVIR
     volumes:
-      - mysql_data-${D_ENV}:/var/lib/mysql
+      - mysql_data-ENVIR:/var/lib/mysql
 networks:
-  prestashop-net-env-${D_ENV}:
+  prestashop-net-env-ENVIR:
     driver: 'bridge'
 volumes:
-  app_data-${D_ENV}:
-  mysql_data-${D_ENV}:
+  app_data-ENVIR:
+  mysql_data-ENVIR:
