@@ -13,7 +13,7 @@ services:
     networks:
       - prestashop-net-env-ENVIR
     volumes:
-      - app_data-ENVIR:/var/www/html
+      - app_data_ENVIR:/var/www/html
   db:
     container_name: some-mysql
     image: my-mysql:latest
@@ -23,10 +23,10 @@ services:
     networks:
       - prestashop-net-env-ENVIR
     volumes:
-      - mysql_data-ENVIR:/var/lib/mysql
+      - mysql_data_ENVIR:/var/lib/mysql
 networks:
   prestashop-net-env-ENVIR:
     driver: 'bridge'
 volumes:
-  app_data-ENVIR:
-  mysql_data-ENVIR:
+  app_data_ENVIR:
+  mysql_data_ENVIR:
