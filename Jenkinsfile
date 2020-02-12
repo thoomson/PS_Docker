@@ -11,7 +11,7 @@ pipeline {
             echo 'Starting..'
             
             script {
-                if ( DEPLOY_ENV < '1' || env.DEPLOY_ENV > '4') {
+                if ( DEPLOY_ENV < '1' || DEPLOY_ENV > '4') {
                     DEPLOY_ENV = '1'
                 }
             }
