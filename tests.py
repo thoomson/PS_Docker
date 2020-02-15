@@ -24,7 +24,7 @@ class PrestashopSearch(unittest.TestCase):
 
     def test_search_unknow_prestashop(self):
         driver = self.driver
-        driver.get(testurl)
+        driver.get("http://127.0.0.1:808" + os.environ["DEPLOY_ENV"])
         self.assertIn("Ma boutique", driver.title)
         elem = driver.find_element_by_name("s")
         elem.send_keys("lyufytdhrtsdtr")
