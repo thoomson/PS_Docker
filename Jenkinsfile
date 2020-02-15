@@ -16,7 +16,8 @@ pipeline {
                 }
             }
             
-            sh "docker-compose down"
+            sh "mkdir -p $DEPLOY_ENV"
+            sh "cd $DEPLOY_ENV && docker-compose down"
          }
       }
       stage('PreBuild') {
@@ -25,7 +26,7 @@ pipeline {
             sh "unzip ${PS_VERSION}.zip"
             sh "cd PrestaShop-${PS_VERSION} && composer install"
             sh "cd PrestaShop-${PS_VERSION} && export SYMFONY_DEPRECATIONS_HELPER=weak && php -d date.timezone=UTC ./vendor/bin/phpunit -c tests/Unit/phpunit.xml"
-            sh "rm -rf PrestaShop-${PS_VERSION} ${PS_VERSION}.zip"
+            sh "rm -rf PrestaShop-${PS_VERSION} && rm -f ${PS_VERSION}.zip"
          }
       }
       stage('Build') {
@@ -35,23 +36,26 @@ pipeline {
             sh "wget -N https://raw.githubusercontent.com/thoomson/PS_Docker/master/my-presta/Dockerfile"
             sh "docker build --build-arg VERSION=${PS_VERSION} -t my-presta ."
             sh "wget -O compose.file -N https://raw.githubusercontent.com/thoomson/PS_Docker/master/docker-compose.yml"
-            sh "sed 's/ENVIR/$DEPLOY_ENV/g' compose.file > docker-compose.yml"
+            sh "sed 's/ENVIR/$DEPLOY_ENV/g' compose.file > $DEPLOY_ENV/docker-compose.yml"
          }
       }
       stage('Run') {
          steps {
-            sh "docker-compose up -d"
+            sh "cd $DEPLOY_ENV && docker-compose up -d"
          }
       }
       stage('Tests') {
          steps {
-            sh "wget -N https://raw.githubusercontent.com/thoomson/PS_Docker/master/tests.py"
-            sh "export DEPLOY_ENV=$DEPLOY_ENV && python3 tests.py"
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
+            {
+               sh "wget -N https://raw.githubusercontent.com/thoomson/PS_Docker/master/tests.py"
+               sh "export DEPLOY_ENV=$DEPLOY_ENV && python3 tests.py"
+            }
          }
       }
       stage('PublishReport') {
          steps {
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'MyReport.html', reportName: 'Tests Dashboard', reportTitles: ''])    
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'reports', reportFiles: 'MyReport-ENV-1.html,MyReport-ENV-2.html,MyReport-ENV-3.html,MyReport-ENV-4.html', reportName: 'Tests Dashboard', reportTitles: ''])
          }
       }
    }
