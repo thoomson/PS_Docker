@@ -4,8 +4,6 @@ import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-testurl = "http://127.0.0.1:808" + os.environ["DEPLOY_ENV"]
-
 class PrestashopSearch(unittest.TestCase):
 
     def setUp(self):
@@ -15,10 +13,9 @@ class PrestashopSearch(unittest.TestCase):
         chrome_options.add_argument('--disable-dev-shm-usage')
         self.driver = webdriver.Chrome(options=chrome_options)
 
-
     def test_search_in_prestashop(self):
         driver = self.driver
-        driver.get(testurl)
+        driver.get("http://127.0.0.1:808" + os.environ["DEPLOY_ENV"])
         self.assertIn("Ma boutique", driver.title)
         elem = driver.find_element_by_name("s")
         elem.send_keys("pull")
@@ -38,4 +35,4 @@ class PrestashopSearch(unittest.TestCase):
         self.driver.close()
 
 if __name__ == "__main__":
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="MyReport", add_timestamp=False))
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="MyReport-ENV-" + os.environ["DEPLOY_ENV"], add_timestamp=False))
