@@ -1,9 +1,11 @@
+properties([
+  parameters([
+    string(name: 'DEPLOY_ENV', defaultValue: '1', description: 'The target environment', ),
+    string(name: 'PS_VERSION', defaultValue: '1.7.6.1', description: 'The prestashop version', )
+   ])
+])
 pipeline {
    agent any
-   environment {
-        PS_VERSION = '1.7.6.2'
-        DEPLOY_ENV = '2'
-   }
 
    stages {
       stage('PreLoad') {
@@ -12,12 +14,13 @@ pipeline {
             
             script {
                 if ( DEPLOY_ENV < '1' || DEPLOY_ENV > '4') {
-                    DEPLOY_ENV = '1'
+                    DEPLOY_ENV = '4'
                 }
             }
             
             sh "mkdir -p $DEPLOY_ENV"
             sh "cd $DEPLOY_ENV && docker-compose down"
+            //sh "docker-compose down"
          }
       }
       stage('PreBuild') {
