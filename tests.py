@@ -35,4 +35,4 @@ class PrestashopSearch(unittest.TestCase):
         self.driver.close()
 
 if __name__ == "__main__":
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="MyReport-ENV-" + os.environ["DEPLOY_ENV"], add_timestamp=False))
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_title="Tests Results", report_name="MyReport-ENV-" + os.environ["DEPLOY_ENV"], add_timestamp=False))
