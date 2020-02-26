@@ -1,7 +1,7 @@
 properties([
   parameters([
-    string(name: 'DEPLOY_ENV', defaultValue: '1', description: 'The target environment', ),
-    string(name: 'PS_VERSION', defaultValue: '1.7.6.1', description: 'The prestashop version', )
+    choice(name: 'DEPLOY_ENV', choices: ['1', '2', '3', '4'], description: 'The target environment', ),
+    choice(name: 'PS_VERSION', choices: ['1.7.6.0', '1.7.6.1', '1.7.6.2', '1.7.6.3'], description: 'The prestashop version', )
    ])
 ])
 pipeline {
