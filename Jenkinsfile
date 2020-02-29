@@ -20,7 +20,6 @@ pipeline {
             
             sh "mkdir -p $DEPLOY_ENV"
             sh "cd $DEPLOY_ENV && docker-compose down"
-            //sh "docker-compose down"
          }
       }
       stage('PreBuild') {
